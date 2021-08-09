@@ -54,6 +54,27 @@ public class CategorieDAO {
 			return null;
 		}
 	}
+	
+	public Categorie getByKeyword(String nom) {
+		try {
+
+			PreparedStatement ps = Database.connexion.prepareStatement("SELECT * FROM Categorie WHERE nom_categorie=?");
+			ps.setString(1, nom);
+
+			ResultSet resultat = ps.executeQuery();
+
+			Categorie c = new Categorie();
+			while (resultat.next()) {
+				c.setId(resultat.getInt("id"));
+				c.setNom_categorie(resultat.getString("nom_categorie"));
+			}
+			return c;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
 
 	public ArrayList<Categorie> getAll() {
 		ArrayList<Categorie> categories = new ArrayList<Categorie>();

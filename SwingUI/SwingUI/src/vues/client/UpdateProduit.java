@@ -12,8 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import dao.CategorieDAO;
 import dao.ProduitDAO;
 import entites.Produit;
+import javax.swing.JComboBox;
 
 public class UpdateProduit {
 
@@ -21,7 +23,6 @@ public class UpdateProduit {
 	private JFrame parent;
 	private JTextField textFieldNom;
 	private JTextField textFieldPrix;
-	private JTextField textFieldIdCategorie;
 	private Produit produit;
 
 	public JFrame getFrame() {
@@ -46,6 +47,25 @@ public class UpdateProduit {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+		CategorieDAO categorie = new CategorieDAO();
+		int size = categorie.getAll().size();
+		String liste[] = new String[size];
+		int suivi = 0;
+		for (int i = 0; i < size; i++) {
+			if (categorie.getById(i).getId() == 0) {
+				size++;
+			} else {
+				liste[suivi] = categorie.getById(i).getNom_categorie();
+				suivi++;
+			}
+		}
+		
+		CategorieDAO categoriedao = new CategorieDAO();
+		JComboBox<String> comboBox = new JComboBox<>(liste);
+		comboBox.setBounds(404, 302, 130, 21);
+		frame.getContentPane().add(comboBox);
+		comboBox.setSelectedItem(categoriedao.getById(produit.getIdCategorie()).getNom_categorie());
+
 		JPanel panelMenu = new JPanel();
 		panelMenu.setBackground(new Color(102, 204, 102));
 		panelMenu.setBounds(0, 140, 184, 330);
@@ -65,19 +85,22 @@ public class UpdateProduit {
 			public void mouseReleased(MouseEvent e) {
 				lblCreer.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				CategorieDAO categoriedao = new CategorieDAO();
 				String nom = textFieldNom.getText();
 				String prix = textFieldPrix.getText();
-				String idCategorie = textFieldIdCategorie.getText();
+				String selectedCategorie = (String) comboBox.getSelectedItem();
+				int idCategorie = categoriedao.getByKeyword(selectedCategorie).getId();
+
 				try {
 					double prixDouble = Double.parseDouble(prix);
-					int idCategorieInt = Integer.parseInt(idCategorie);
 
 					produit.setNom(nom);
 					produit.setPrix(prixDouble);
-					produit.setIdCategorie(idCategorieInt);
-					
+					produit.setIdCategorie(idCategorie);
+
 					ProduitDAO produitdao = new ProduitDAO();
 					produitdao.save(produit);
 
@@ -128,33 +151,28 @@ public class UpdateProduit {
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		panelHeader.add(lblNewLabel);
-		
+
 		JLabel lblNom = new JLabel("Nom");
 		lblNom.setBounds(274, 218, 61, 16);
 		frame.getContentPane().add(lblNom);
-		
+
 		textFieldNom = new JTextField(produit.getNom());
 		textFieldNom.setBounds(404, 213, 130, 26);
 		frame.getContentPane().add(textFieldNom);
 		textFieldNom.setColumns(10);
-		
+
 		JLabel lblPrix = new JLabel("Prix");
 		lblPrix.setBounds(274, 260, 61, 16);
 		frame.getContentPane().add(lblPrix);
-		
-		textFieldPrix = new JTextField(produit.getPrix()+"");
+
+		textFieldPrix = new JTextField(produit.getPrix() + "");
 		textFieldPrix.setColumns(10);
 		textFieldPrix.setBounds(404, 255, 130, 26);
 		frame.getContentPane().add(textFieldPrix);
-		
+
 		JLabel lblIdCategorie = new JLabel("Catégorie");
 		lblIdCategorie.setBounds(274, 304, 61, 16);
 		frame.getContentPane().add(lblIdCategorie);
-		
-		textFieldIdCategorie = new JTextField(produit.getIdCategorie()+"");
-		textFieldIdCategorie.setColumns(10);
-		textFieldIdCategorie.setBounds(404, 299, 130, 26);
-		frame.getContentPane().add(textFieldIdCategorie);
 
 	}
 

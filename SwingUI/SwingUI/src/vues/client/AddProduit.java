@@ -4,15 +4,20 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
+import dao.CategorieDAO;
 import dao.ProduitDAO;
+import entites.Categorie;
 import entites.Produit;
 
 public class AddProduit {
@@ -21,7 +26,6 @@ public class AddProduit {
 	private JFrame parent;
 	private JTextField textFieldNom;
 	private JTextField textFieldPrix;
-	private JTextField textFieldIdCategorie;
 
 	public JFrame getFrame() {
 		return frame;
@@ -38,6 +42,8 @@ public class AddProduit {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 700, 500);
@@ -49,6 +55,24 @@ public class AddProduit {
 		panelMenu.setBounds(0, 140, 184, 330);
 		frame.getContentPane().add(panelMenu);
 		panelMenu.setLayout(null);
+		
+		
+		CategorieDAO categorie = new CategorieDAO();
+		int size = categorie.getAll().size();
+		String liste [] = new String[size];
+		int suivi = 0;
+		for(int i = 0 ; i<size;i++) {
+			if(categorie.getById(i).getId()==0) {
+				size++;
+			}else {
+				liste[suivi] = categorie.getById(i).getNom_categorie();
+				suivi++;
+			}
+		}
+			
+		JComboBox<String> comboBoxCategorie = new JComboBox<>(liste);
+		comboBoxCategorie.setBounds(404, 300, 130, 27);
+		frame.getContentPane().add(comboBoxCategorie);
 
 		JLabel lblCreer = new JLabel("Valider");
 		lblCreer.setIcon(new ImageIcon(AddProduit.class.getResource("/resources/images/outline_done_white_24dp.png")));
@@ -67,11 +91,11 @@ public class AddProduit {
 			public void mouseClicked(MouseEvent e) {
 				String nom = textFieldNom.getText();
 				String prix = textFieldPrix.getText();
-				String idCategorie = textFieldIdCategorie.getText();
+				String selectedCategorie = (String) comboBoxCategorie.getSelectedItem();
 				try {
+					CategorieDAO categoriedao = new CategorieDAO();
 					double prixDouble = Double.parseDouble(prix);
-					int idCategorieInt = Integer.parseInt(idCategorie);
-
+					int idCategorieInt = categoriedao.getByKeyword(selectedCategorie).getId();
 					Produit produit = new Produit(nom, idCategorieInt, prixDouble);
 					ProduitDAO produitdao = new ProduitDAO();
 					produitdao.save(produit);
@@ -145,12 +169,7 @@ public class AddProduit {
 		JLabel lblIdCategorie = new JLabel("Catégorie");
 		lblIdCategorie.setBounds(274, 304, 61, 16);
 		frame.getContentPane().add(lblIdCategorie);
-
-		textFieldIdCategorie = new JTextField();
-		textFieldIdCategorie.setColumns(10);
-		textFieldIdCategorie.setBounds(404, 299, 130, 26);
-		frame.getContentPane().add(textFieldIdCategorie);
-
+		
 	}
 
 	public void setParent(JFrame parent) {

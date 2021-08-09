@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="vues.client.GestionProduit"/>
+    <fullyQualifiedTypeName name="dao.CategorieDAO"/>
+    <fullyQualifiedTypeName name="vues.client.GestionCategorie"/>
+    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+</qualifiedTypeNameHistroy>
