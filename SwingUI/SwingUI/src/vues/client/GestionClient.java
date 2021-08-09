@@ -141,7 +141,7 @@ public class GestionClient {
 		lblSupprimer.setBounds(33, 99, 130, 40);
 		panelMenu.add(lblSupprimer);
 
-		JLabel lblCreer = new JLabel("Créer");
+		JLabel lblCreer = new JLabel("Cr\u00E9er");
 		lblCreer.setIcon(
 				new ImageIcon(GestionClient.class.getResource("/resources/images/outline_add_white_24dp.png")));
 		lblCreer.addMouseListener(new MouseAdapter() {
@@ -209,7 +209,7 @@ public class GestionClient {
 
 		ArrayList<Client> clients = clientdao.getAll();
 
-		String columns[] = { "Id", "Prénom", "Nom", "Age", "Ville" };
+		String columns[] = { "Id", "Prenom", "Nom", "Age", "Ville" };
 		String data[][] = new String[clients.size()][columns.length];
 
 		int i = 0;

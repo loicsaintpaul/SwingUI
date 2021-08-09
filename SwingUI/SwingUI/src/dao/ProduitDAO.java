@@ -61,6 +61,7 @@ public class ProduitDAO {
 	}
 	
 	
+	
 	public ArrayList<Produit> getAll() {
 		ArrayList<Produit> produits = new ArrayList<Produit>();
 		try {
@@ -75,6 +76,32 @@ public class ProduitDAO {
 					u.setNom(resultat.getString( "nom_produit" ));
 					u.setPrix(resultat.getDouble( "prix" ));
 					u.setIdCategorie(resultat.getInt( "id_categorie" ));
+					produits.add(u);
+				}
+				
+				
+				return produits;
+			
+		} catch (Exception ex) {
+        	ex.printStackTrace();
+        	return null;
+        }
+	}
+	
+	public ArrayList<Produit> getAllWname() {
+		ArrayList<Produit> produits = new ArrayList<Produit>();
+		try {
+			
+				PreparedStatement ps  = Database.connexion.prepareStatement("SELECT produit.id, nom_produit, prix, nom_categorie  FROM produit,categorie WHERE categorie.id = produit.id_categorie");
+				
+				ResultSet resultat=ps.executeQuery();
+
+				while(resultat.next()) {
+					Produit u = new Produit();
+					u.setId(resultat.getInt( "produit.id" ));
+					u.setNom(resultat.getString( "nom_produit" ));
+					u.setPrix(resultat.getDouble( "prix" ));
+					u.setNomCat(resultat.getString( "nom_categorie" ));
 					produits.add(u);
 				}
 				

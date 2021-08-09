@@ -15,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import entites.Database;
+import vues.client.GestionCategorie;
 import vues.client.GestionClient;
+import vues.client.GestionProduit;
 
 public class Application {
 
@@ -74,11 +76,22 @@ public class Application {
 		btnGestionProduits.setIcon(new ImageIcon(Application.class.getResource("/resources/images/outline_inventory_2_white_24dp.png")));
 		btnGestionProduits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				GestionProduit winGestionProduit = new GestionProduit();
+				winGestionProduit.setParent(frame);
+				winGestionProduit.getFrame().setVisible(true);
+				frame.setVisible(false);
 			}
 		});
 		
 		JButton btnGestionCategories = new JButton("Gestion Categories");
+		btnGestionCategories.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GestionCategorie winGestionCategorie = new GestionCategorie();
+				winGestionCategorie.setParent(frame);
+				winGestionCategorie.getFrame().setVisible(true);
+				frame.setVisible(false);
+			}
+		});
 		btnGestionCategories.setForeground(Color.WHITE);
 		btnGestionCategories.setBackground(new Color(153, 204, 255));
 		btnGestionCategories.setOpaque(true);

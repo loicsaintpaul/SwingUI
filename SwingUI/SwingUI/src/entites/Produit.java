@@ -5,9 +5,18 @@ public class Produit {
 	private String nom;
 	private int idCategorie;
 	private double prix;
+	private String nomCat;
 	
 	public int getId() {
 		return id;
+	}
+
+	public String getNomCat() {
+		return nomCat;
+	}
+
+	public void setNomCat(String nomCat) {
+		this.nomCat = nomCat;
 	}
 
 	public void setId(int id) {

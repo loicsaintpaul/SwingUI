@@ -77,11 +77,11 @@ public class AddClient {
 					ClientDAO clientdao = new ClientDAO();
 					clientdao.save(client);
 
-					JOptionPane.showMessageDialog(frame, "Client ajouté");
+					JOptionPane.showMessageDialog(frame, "Client ajoute");
 					frame.setVisible(false);
 					parent.setVisible(true);
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(frame, "Mauvaise saisie de l'âge");
+					JOptionPane.showMessageDialog(frame, "Mauvaise saisie de l'age");
 				}
 			}
 		});
@@ -134,7 +134,7 @@ public class AddClient {
 		frame.getContentPane().add(textFieldNom);
 		textFieldNom.setColumns(10);
 
-		JLabel lblPrenom = new JLabel("Prénom");
+		JLabel lblPrenom = new JLabel("Prenom");
 		lblPrenom.setBounds(274, 260, 61, 16);
 		frame.getContentPane().add(lblPrenom);
 
