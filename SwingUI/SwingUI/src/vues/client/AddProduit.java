@@ -58,21 +58,25 @@ public class AddProduit {
 		
 		
 		CategorieDAO categorie = new CategorieDAO();
-		int size = categorie.getAll().size();
-		String liste [] = new String[size];
-		int suivi = 0;
-		for(int i = 0 ; i<size;i++) {
-			if(categorie.getById(i).getId()==0) {
-				size++;
-			}else {
-				liste[suivi] = categorie.getById(i).getNom_categorie();
-				suivi++;
-			}
-		}
+		ArrayList<Categorie> listecategorie = categorie.getAll();
+		//Categorie data[] = new Categorie[listecategorie.size()];
+
+		/*int i = 0;
+		for (Categorie c : listecategorie) {
 			
-		JComboBox<String> comboBoxCategorie = new JComboBox<>(liste);
+			//data[i] = c;
+			i++;
+		}*/
+			
+		JComboBox<Categorie> comboBoxCategorie = new JComboBox<Categorie>();
 		comboBoxCategorie.setBounds(404, 300, 130, 27);
 		frame.getContentPane().add(comboBoxCategorie);
+		
+		int i = 0;
+		for (Categorie c : listecategorie) {
+			comboBoxCategorie.addItem(c);
+
+		}
 
 		JLabel lblCreer = new JLabel("Valider");
 		lblCreer.setIcon(new ImageIcon(AddProduit.class.getResource("/resources/images/outline_done_white_24dp.png")));
@@ -91,11 +95,11 @@ public class AddProduit {
 			public void mouseClicked(MouseEvent e) {
 				String nom = textFieldNom.getText();
 				String prix = textFieldPrix.getText();
-				String selectedCategorie = (String) comboBoxCategorie.getSelectedItem();
+				Categorie selectedCategorie = (Categorie) comboBoxCategorie.getSelectedItem();
 				try {
 					CategorieDAO categoriedao = new CategorieDAO();
 					double prixDouble = Double.parseDouble(prix);
-					int idCategorieInt = categoriedao.getByKeyword(selectedCategorie).getId();
+					int idCategorieInt = selectedCategorie.getId();
 					Produit produit = new Produit(nom, idCategorieInt, prixDouble);
 					ProduitDAO produitdao = new ProduitDAO();
 					produitdao.save(produit);

@@ -40,7 +40,7 @@ public class Categorie {
 
 	@Override
 	public String toString() {
-		return "categorie [id=" + id + ", nom_categorie=" + nom_categorie + "]";
+		return nom_categorie;
 	}
 	
 	

@@ -3,5 +3,7 @@
     <fullyQualifiedTypeName name="vues.client.GestionProduit"/>
     <fullyQualifiedTypeName name="dao.CategorieDAO"/>
     <fullyQualifiedTypeName name="vues.client.GestionCategorie"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="entites.Categorie"/>
     <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
 </qualifiedTypeNameHistroy>

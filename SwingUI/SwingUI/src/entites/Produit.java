@@ -59,6 +59,6 @@ public class Produit {
 	}
 
 	public String toString() {
-		return "id:" + id + "\t\tnom:" + nom + "\t\tidCategorie:" + idCategorie + "\t\tprix:" + prix + "\n";
+		return nom;
 	}
 }

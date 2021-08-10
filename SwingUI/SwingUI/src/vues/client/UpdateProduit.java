@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -11,9 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import dao.CategorieDAO;
 import dao.ProduitDAO;
+import entites.Categorie;
 import entites.Produit;
 import javax.swing.JComboBox;
 
@@ -40,6 +43,9 @@ public class UpdateProduit {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
+
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
@@ -47,24 +53,20 @@ public class UpdateProduit {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		CategorieDAO categorie = new CategorieDAO();
-		int size = categorie.getAll().size();
-		String liste[] = new String[size];
-		int suivi = 0;
-		for (int i = 0; i < size; i++) {
-			if (categorie.getById(i).getId() == 0) {
-				size++;
-			} else {
-				liste[suivi] = categorie.getById(i).getNom_categorie();
-				suivi++;
-			}
-		}
-		
 		CategorieDAO categoriedao = new CategorieDAO();
-		JComboBox<String> comboBox = new JComboBox<>(liste);
+		ArrayList<Categorie> listecategorie = categoriedao.getAll();
+		
+		JComboBox<Categorie> comboBox = new JComboBox<Categorie>();
 		comboBox.setBounds(404, 302, 130, 21);
 		frame.getContentPane().add(comboBox);
-		comboBox.setSelectedItem(categoriedao.getById(produit.getIdCategorie()).getNom_categorie());
+		
+		for (Categorie c : listecategorie) {
+			comboBox.addItem(c);
+			
+		}
+		System.out.println(comboBox);
+		System.out.println(categoriedao.getById(produit.getIdCategorie()));
+		comboBox.getModel().setSelectedItem(categoriedao.getById(produit.getIdCategorie()));
 
 		JPanel panelMenu = new JPanel();
 		panelMenu.setBackground(new Color(102, 204, 102));
@@ -176,6 +178,7 @@ public class UpdateProduit {
 
 	}
 
+	
 	public void setParent(JFrame parent) {
 		this.parent = parent;
 	}
