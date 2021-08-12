@@ -64,8 +64,7 @@ public class UpdateProduit {
 			comboBox.addItem(c);
 			
 		}
-		System.out.println(comboBox);
-		System.out.println(categoriedao.getById(produit.getIdCategorie()));
+
 		comboBox.getModel().setSelectedItem(categoriedao.getById(produit.getIdCategorie()));
 
 		JPanel panelMenu = new JPanel();
@@ -93,8 +92,9 @@ public class UpdateProduit {
 				CategorieDAO categoriedao = new CategorieDAO();
 				String nom = textFieldNom.getText();
 				String prix = textFieldPrix.getText();
-				String selectedCategorie = (String) comboBox.getSelectedItem();
-				int idCategorie = categoriedao.getByKeyword(selectedCategorie).getId();
+				Categorie selectedCategorie = (Categorie) comboBox.getSelectedItem();
+				
+				int idCategorie = selectedCategorie.getId();
 
 				try {
 					double prixDouble = Double.parseDouble(prix);
@@ -148,7 +148,7 @@ public class UpdateProduit {
 		frame.getContentPane().add(panelHeader);
 		panelHeader.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Modifier un client");
+		JLabel lblNewLabel = new JLabel("Modifier un produit");
 		lblNewLabel.setBounds(200, 51, 301, 36);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 30));
