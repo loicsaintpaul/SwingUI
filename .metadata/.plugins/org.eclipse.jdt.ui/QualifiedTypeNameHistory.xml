@@ -6,4 +6,7 @@
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="entites.Categorie"/>
     <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+    <fullyQualifiedTypeName name="java.awt.event.FocusAdapter"/>
+    <fullyQualifiedTypeName name="java.awt.event.FocusEvent"/>
+    <fullyQualifiedTypeName name="java.awt.event.KeyListener"/>
 </qualifiedTypeNameHistroy>

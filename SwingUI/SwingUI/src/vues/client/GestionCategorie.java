@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -20,6 +24,10 @@ import javax.swing.table.DefaultTableModel;
 import dao.CategorieDAO;
 import dao.CategorieDAO;
 import entites.Categorie;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestionCategorie {
 
@@ -27,6 +35,7 @@ public class GestionCategorie {
 	private JFrame parent;
 	private DefaultTableModel model;
 	private JTable tableau;
+	private JTextField tsearch;
 
 	public JFrame getFrame() {
 		return frame;
@@ -62,7 +71,7 @@ public class GestionCategorie {
 		tableau.setBounds(182, 140, 518, 22);
 
 		JScrollPane scrollPane = new JScrollPane(tableau);
-		scrollPane.setBounds(184, 140, 516, 330);
+		scrollPane.setBounds(182, 169, 518, 284);
 		frame.getContentPane().add(scrollPane);
 
 		JPanel panelMenu = new JPanel();
@@ -122,9 +131,10 @@ public class GestionCategorie {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (tableau.getSelectedRow() != -1) {
-					
-					int dialogResult = JOptionPane.showConfirmDialog(frame, "Voulez-vous supprimer cette categorie ?","Choix",JOptionPane.YES_NO_OPTION);
-					if(dialogResult == JOptionPane.YES_OPTION){
+
+					int dialogResult = JOptionPane.showConfirmDialog(frame, "Voulez-vous supprimer cette categorie ?",
+							"Choix", JOptionPane.YES_NO_OPTION);
+					if (dialogResult == JOptionPane.YES_OPTION) {
 						int rowIndex = tableau.getSelectedRow();
 						int selectedId = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
 						CategorieDAO Categoriedao = new CategorieDAO();
@@ -169,8 +179,8 @@ public class GestionCategorie {
 		panelMenu.add(lblCreer);
 
 		JLabel lblQuitter = new JLabel("Quitter");
-		lblQuitter.setIcon(
-				new ImageIcon(GestionCategorie.class.getResource("/resources/images/outline_arrow_back_white_24dp.png")));
+		lblQuitter.setIcon(new ImageIcon(
+				GestionCategorie.class.getResource("/resources/images/outline_arrow_back_white_24dp.png")));
 		lblQuitter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -203,27 +213,73 @@ public class GestionCategorie {
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		panelHeader.add(lblNewLabel);
+		
+				tsearch = new JTextField();
+				tsearch.setBounds(182, 140, 409, 29);
+				frame.getContentPane().add(tsearch);
+				tsearch.setColumns(10);
+				
+				JButton bfiltercat = new JButton("Filtrer");
+				bfiltercat.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						populateCategorie();
+					}
+				});
+				bfiltercat.setBounds(589, 140, 111, 29);
+				frame.getContentPane().add(bfiltercat);
+
+
+		tsearch.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					populateCategorie();
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 	}
 
 	public void populateCategorie() {
 		CategorieDAO Categoriedao = new CategorieDAO();
+		String a = tsearch.getText();
+		ArrayList<Categorie> Categories;
+		
+		if (a.isBlank()) {
+			Categories = Categoriedao.getAll();
+		}else{
+			Categories = Categoriedao.getByKeyword(a);
+		}
 
-		ArrayList<Categorie> Categories = Categoriedao.getAll();
-
-		String columns[] = { "Id", "Nom Catégorie"};
+		String columns[] = { "Id", "Nom Catégorie" };
 		String data[][] = new String[Categories.size()][columns.length];
-
+		
+		System.out.println("check categories : "+Categories);
+		
 		int i = 0;
 		for (Categorie u : Categories) {
 			data[i][0] = u.getId() + "";
 			data[i][1] = u.getNom_categorie();
 			i++;
 		}
-
+		
 		model = new DefaultTableModel(data, columns);
-		
+
 		// mets à jour le model
-		
+
 		tableau.setModel(model);
 	}
 

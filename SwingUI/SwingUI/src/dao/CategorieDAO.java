@@ -55,20 +55,22 @@ public class CategorieDAO {
 		}
 	}
 	
-	public Categorie getByKeyword(String nom) {
+	public ArrayList<Categorie> getByKeyword(String nom) {
 		try {
-
-			PreparedStatement ps = Database.connexion.prepareStatement("SELECT * FROM Categorie WHERE nom_categorie=?");
-			ps.setString(1, nom);
+			ArrayList<Categorie> lc = new ArrayList<>();
+			PreparedStatement ps = Database.connexion.prepareStatement("SELECT * FROM Categorie WHERE nom_categorie LIKE ?");
+			ps.setString(1, "%"+nom.toLowerCase()+"%");	
 
 			ResultSet resultat = ps.executeQuery();
 
-			Categorie c = new Categorie();
+			
 			while (resultat.next()) {
+				Categorie c = new Categorie();
 				c.setId(resultat.getInt("id"));
 				c.setNom_categorie(resultat.getString("nom_categorie"));
+				lc.add(c);
 			}
-			return c;
+			return lc;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

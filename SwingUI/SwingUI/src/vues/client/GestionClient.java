@@ -19,6 +19,10 @@ import dao.ClientDAO;
 import entites.Client;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestionClient {
 
@@ -26,6 +30,7 @@ public class GestionClient {
 	private JFrame parent;
 	private DefaultTableModel model;
 	private JTable tableau;
+	private JTextField textFieldFiltre;
 
 	public JFrame getFrame() {
 		return frame;
@@ -61,7 +66,7 @@ public class GestionClient {
 		tableau.setBounds(182, 140, 518, 22);
 
 		JScrollPane scrollPane = new JScrollPane(tableau);
-		scrollPane.setBounds(184, 140, 516, 330);
+		scrollPane.setBounds(184, 168, 492, 285);
 		frame.getContentPane().add(scrollPane);
 
 		JPanel panelMenu = new JPanel();
@@ -202,29 +207,54 @@ public class GestionClient {
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		panelHeader.add(lblNewLabel);
+		
+		textFieldFiltre = new JTextField();
+		textFieldFiltre.setBounds(184, 140, 386, 31);
+		frame.getContentPane().add(textFieldFiltre);
+		textFieldFiltre.setColumns(10);
+		
+		JButton btnFiltrer = new JButton("Filtrer");
+		btnFiltrer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				populateClient();
+			}
+		});
+		btnFiltrer.setBounds(571, 140, 105, 29);
+		frame.getContentPane().add(btnFiltrer);
 	}
 
 	public void populateClient() {
 		ClientDAO clientdao = new ClientDAO();
+		
+		String filtre = textFieldFiltre.getText();
+		
+		ArrayList<Client> clients;
 
-		ArrayList<Client> clients = clientdao.getAll();
+		if(filtre.isBlank()) {
+			clients = clientdao.getAll();
+		}else {
+			clients = clientdao.getByName(filtre);
+		}
 
 		String columns[] = { "Id", "Prenom", "Nom", "Age", "Ville" };
-		String data[][] = new String[clients.size()][columns.length];
+		String data[][] = null;
+		if(clients.size() != 0) {
+			data = new String[clients.size()][columns.length];
 
-		int i = 0;
-		for (Client u : clients) {
-			data[i][0] = u.getId() + "";
-			data[i][1] = u.getNom();
-			data[i][2] = u.getPrenom();
-			data[i][3] = u.getAge() + "";
-			data[i][4] = u.getVille();
-			i++;
+			int i = 0;
+			for (Client u : clients) {
+				data[i][0] = u.getId() + "";
+				data[i][1] = u.getNom();
+				data[i][2] = u.getPrenom();
+				data[i][3] = u.getAge() + "";
+				data[i][4] = u.getVille();
+				i++;
+			}
 		}
 
 		model = new DefaultTableModel(data, columns);
 		
-		// mets Ã  jour le model
+		// mets à jour le model
 		
 		tableau.setModel(model);
 	}

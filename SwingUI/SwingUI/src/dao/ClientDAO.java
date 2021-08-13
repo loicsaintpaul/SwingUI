@@ -106,4 +106,33 @@ public class ClientDAO {
         	System.out.println("DELETED NO");
         }
 	}
+
+	public ArrayList<Client> getByName(String filtre) {
+		ArrayList<Client> users = new ArrayList<Client>();
+		try {
+			
+				PreparedStatement ps  = Database.connexion.prepareStatement("SELECT * FROM client WHERE nom LIKE ? OR prenom LIKE ?");
+				ps.setString(1, "%"+filtre+"%");
+				ps.setString(2, "%"+filtre+"%");
+				
+				ResultSet resultat=ps.executeQuery();
+
+				while(resultat.next()) {
+					Client u = new Client();
+					u.setId(resultat.getInt( "id" ));
+					u.setNom(resultat.getString( "nom" ));
+					u.setPrenom(resultat.getString( "prenom" ));
+					u.setAge(resultat.getInt( "age" ));
+					u.setVille(resultat.getString( "ville" ));
+					users.add(u);
+				}
+				
+				
+				return users;
+			
+		} catch (Exception ex) {
+        	ex.printStackTrace();
+        	return null;
+        }
+	}
 }
