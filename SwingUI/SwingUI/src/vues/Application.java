@@ -62,7 +62,7 @@ public class Application {
 		btnGestionClients.setBackground(new Color(153, 204, 255));
 		btnGestionClients.setOpaque(true);
 		btnGestionClients.setBorderPainted(false);
-		btnGestionClients.setBounds(20, 179, 180, 104);
+		btnGestionClients.setBounds(10, 179, 180, 104);
 		frame.getContentPane().add(btnGestionClients);
 		btnGestionClients.setIcon(new ImageIcon(Application.class.getResource("/resources/images/outline_people_white_24dp.png")));
 		
@@ -71,7 +71,7 @@ public class Application {
 		btnGestionProduits.setBackground(new Color(153, 204, 255));
 		btnGestionProduits.setOpaque(true);
 		btnGestionProduits.setBorderPainted(false);
-		btnGestionProduits.setBounds(234, 179, 180, 104);
+		btnGestionProduits.setBounds(212, 179, 192, 104);
 		frame.getContentPane().add(btnGestionProduits);
 		btnGestionProduits.setIcon(new ImageIcon(Application.class.getResource("/resources/images/outline_inventory_2_white_24dp.png")));
 		btnGestionProduits.addActionListener(new ActionListener() {
@@ -96,7 +96,7 @@ public class Application {
 		btnGestionCategories.setBackground(new Color(153, 204, 255));
 		btnGestionCategories.setOpaque(true);
 		btnGestionCategories.setBorderPainted(false);
-		btnGestionCategories.setBounds(448, 179, 180, 104);
+		btnGestionCategories.setBounds(420, 179, 205, 104);
 		frame.getContentPane().add(btnGestionCategories);
 		btnGestionCategories.setIcon(new ImageIcon(Application.class.getResource("/resources/images/outline_sell_white_24dp.png")));
 		

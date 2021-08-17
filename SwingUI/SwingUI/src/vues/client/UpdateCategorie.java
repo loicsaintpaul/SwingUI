@@ -115,13 +115,13 @@ public class UpdateCategorie {
 		panelHeader.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Modifier un Categorie");
-		lblNewLabel.setBounds(200, 51, 301, 36);
+		lblNewLabel.setBounds(200, 51, 396, 36);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		panelHeader.add(lblNewLabel);
 		
-		JLabel lblNom = new JLabel("Nom catégorie :");
-		lblNom.setBounds(274, 218, 61, 16);
+		JLabel lblNom = new JLabel("Nom cat\u00E9gorie");
+		lblNom.setBounds(274, 218, 101, 16);
 		frame.getContentPane().add(lblNom);
 		
 		textFieldNom = new JTextField(Categorie.getNom_categorie());

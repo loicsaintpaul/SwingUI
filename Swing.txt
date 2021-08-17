@@ -1,0 +1,8 @@
+0 - Bdd => Client : Id/Nom/Prenom/Age/Ville - Produit : Id / NomProduit / IdCategorie - Categorie : Id / NomCategorie
+1 - Créer 1 fenetre qui contient 3 boutons : GestionClients / GestionProduits / GestionCategories
+2 - GestionClients => Affiche liste des clients avec les boutons Modifier / Supprimer / Ajouter
+3 - GestionProduits => Affiche liste des produits les boutons Modifier / Supprimer / Ajouter (fenetre ajouter/modifier : utiliser un select avec l'ensemble des catégorie et qui affiche la catégorie ) ( => Afficher le nom de la catégorie et non l'Id)
+4 - GestionClients => Affiche liste des clients avec les boutons Modifier / Supprimer / Ajouter
+5 - Faire une nouvelles fenêtre Ajouter / Modifier
+!!! Afficher les messages de confirmation !!
+!! Design avec Icones + Images + Couleurs !!
